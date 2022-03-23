@@ -4,7 +4,9 @@ export default class Navigation extends Component {
   render() {
     return (
         <div className="menus">
-        <button>sport</button>
+        <button type="button" onClick={function(){
+          this.props.onChange()
+        }.bind(this)}>sport</button>
         <button>news</button>
         <button>tech</button>
         <button>world</button>
