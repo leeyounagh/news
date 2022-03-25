@@ -9,16 +9,16 @@ export default class Main extends Component {
             <div className="row news" id='news-board'>
             <div className="col-lg-8"> 
             <img   alt="news"className="news-img-size No-Image" 
-            src={this.props.media}></img>
+           src={this.props.media}></img>
                   
                </div>
               <div className="col-lg-4">
-                 <h2>{this.props.title}</h2>
-                 <p> {this.props.summary} </p>            
-                <div>
-                  {this.props.date} {this.props.rights}
+                 <h2 >{this.props.title}</h2>
+                 <p > {this.props.summary} </p>            
+                <div  >
+                  {this.props.date} 
                 </div>
-                <div>
+                <div  >
                     저자:{this.props.rights}
                 </div>
               </div>

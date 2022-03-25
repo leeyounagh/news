@@ -3,105 +3,90 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './Components/Header'
 import Navigation from './Components/Navigation'
-import { ClipLoader } from "react-spinners";
 import Main from './Components/Main';
-import {Fragment} from 'react'
-import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { v4 as uuidv4 } from 'uuid';
+
+
 
 
 export default class App extends Component{
+  
   constructor(props){
+    let url;
     super(props);
     this.state ={
       latestnews:[],
-      titleKey:1,
-      mediakey:2,
-      summarykey:3,
-      mediakey:4, 
-      rightskey:5,
-      datekey:6
+      
+    
     }
   }
 
-
+  componentDidMount() {
+    this.getLatestNews();
+  } //fech함수가 render 함수보다 늦게 호출되기때문에 componentDidMount()함수에 
+  // 해당함수를 넣어야됨
  
     
-   getLatestNews = async ()=>{
+   getNews = async ()=>{
     let news = [];
-         let url = new URL(`https://api.newscatcherapi.com/v2/latest_headlines?countries=US&topic=business&page_size=100`)  
-         console.log("url",url)
+        //  let url = new URL(`https://api.newscatcherapi.com/v2/latest_headlines?countries=kR&topic=business&page_size=100`)  
+        //  console.log("url",url)
           let header = new Headers({'x-api-key':'L7DBi0iMqKfM98Mdh44oqyBRYYdkbQPgaiTE93Pj3-U'})
-         let response =await fetch(url,{headers:header})
+         let response =await fetch(this.url,{headers:header})
           let data = await response.json();
-          news = data.articles;
-          
+          news = data.articles
+          JSON.stringify(news) //제이슨 파일을 스트링화해주는거 
           this.setState(
             {
               latestnews:news
             }
           )
-          console.log("data",news)
+          console.log("data",this.state.latestnews)
           return news
-  
+     
           }
-        
-          // getKey(){
-           
-          //   this.state.latestnews.map((news)=>{
-          //     let i=0;
-          //     while(i<news.length){
-          //      this.setState(
-          //        {
-          //          ...latestnews,
-          //         title:
 
-          //        }
-          //      )
-          //     }
-          //     i =i+1
-          //   }
-          //   )
-           
+      getLatestNews= async ()=>{
+          this.url = new URL(`https://api.newscatcherapi.com/v2/latest_headlines?countries=kR&topic=business&page_size=100`)  
+          console.log("url",this.url)
+          this.getNews()
+          
+      } 
 
-          // }
-          randomIDGenerator() {
-            // Math.random should be unique because of its seeding algorithm.
-            // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-            // after the decimal.
-            return "_" + Math.random().toString(36).substr(2, 9);
-          }
-            
+
+   
+    
+ 
+      
+       
+             
 
    _renderNews(){
-     let _news =this.state.latestnews.map((news)=>{
-       return <Main  key={news._id} title={news.title} summary={news.summary} 
-       media={news.media} rights={news.rights} date={news.published_date}
-         
-       
-       >
+    let _news =this.state.latestnews.map((news)=>{
+    return <div key={uuidv4()} className="row news news-style" id='news-board'>
+    <div key={uuidv4()} className="col-lg-8"> 
+    <img  key={uuidv4()}  alt="news"className="news-img-size No-Image" 
+   src={news.media}></img>
           
-       
-       </Main>
+       </div>
+      <div key={uuidv4()} className="col-lg-4">
+         <h2 key={uuidv4()}>{news.title}</h2>
+         <p key={uuidv4()}> {news.summary} </p>            
+        <div  key={uuidv4()}>
+          {news.date} 
+        </div>
+        <div key={uuidv4()} >
+            저자:{news.rights}
+        </div>
+      </div>
+      </div>
+     
       
-    //  return <div className="row news" id='news-board'>
-    //   <div className="col-lg-8"> 
-    //   <img  key={this.state.mediakey} alt="news"className="news-img-size No-Image" 
-    //   src={news.media}></img>
-            
-    //      </div>
-    //     <div className="col-lg-4">
-    //        <h2 key={this.state.titleKey} >{news.title}</h2>
-    //        <p  key={this.state.summarykey}>  {news.summary} </p>            
-    //       <div key={this.state.datekey}>
-    //         {news.date} {news.rights}
-    //       </div>
-    //       <div key={this.state.rightskey}>
-    //           저자:{news.rights}
-    //       </div>
-    //     </div>
-    //     </div>
+   
+    
    })
-     return _news
+   return _news
    }
 
      
@@ -110,26 +95,26 @@ export default class App extends Component{
    
 
   render(){
-    let {news} = this.state.latestnews
-    console.log("되니?",news)
+    console.log("나와이새꺄", this.state.latestnews)
+    
     return (
     
       <div className="App container">
+       
        <Header></Header>
-       <Navigation 
-          onChange={function(e){
+       <Navigation></Navigation>
        
-        this.getLatestNews()
-        
-       }.bind(this)}></Navigation>
-       
-       
-      {this._renderNews()}
+      
+       { this._renderNews()}
+      
+      
+    
     
       </div>
       
       
     );
+    
   }
 
 
