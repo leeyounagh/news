@@ -3,10 +3,38 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+// import { BrowserRouter,useNavigate  } from "react-router-dom";
+
+
+
+
+
+
+// function HomeButton() {
+  
+//   let history = useNavigate();
+
+//   function handleClick() {
+//     history.push("/home");
+//   }
+
+//   return (
+//     <button type="button" onClick={handleClick}>
+//       Go home
+//     </button>
+//   );
+// }
+
+
 
 ReactDOM.render(
   <React.StrictMode>
+   
     <App />
+   
+    
+  
+    
   </React.StrictMode>,
   document.getElementById('root')
 );
